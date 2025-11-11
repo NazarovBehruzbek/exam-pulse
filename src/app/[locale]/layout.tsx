@@ -1,20 +1,11 @@
 // src/app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
-import en from '@/messages/en.json';
-import uz from '@/messages/uz.json';
-import ru from '@/messages/ru.json';
 import "../globals.css";
 
-const messagesMap = { en, uz, ru };
-type Locale = 'en' | 'uz' | 'ru';
-interface Props {
-  children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
-}
 
-export default async function LocaleLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const messages = messagesMap[locale] || en;
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
     <html lang={locale}>
