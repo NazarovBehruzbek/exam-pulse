@@ -6,14 +6,14 @@ import ru from '@/messages/ru.json';
 import "../globals.css";
 
 const messagesMap = { en, uz, ru };
-
-type Props = {
+type Locale = 'en' | 'uz' | 'ru';
+interface Props {
   children: React.ReactNode;
-  params: Promise<{ locale: 'en' | 'uz' | 'ru' }>; 
-};
+  params: Promise<{ locale: Locale }>;
+}
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params; 
+  const { locale } = await params;
   const messages = messagesMap[locale] || en;
 
   return (
